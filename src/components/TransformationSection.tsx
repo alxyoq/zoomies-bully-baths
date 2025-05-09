@@ -94,7 +94,7 @@ export const TransformationSection = () => {
   };
 
   return (
-    <section className="py-16 bg-gray-50" ref={sectionRef}>
+    <section className="py-16 bg-gray-50 min-h-[650px]" ref={sectionRef}>
       <div className="container mx-auto px-2 sm:px-4">
         <motion.div
           className="max-w-6xl mx-auto"

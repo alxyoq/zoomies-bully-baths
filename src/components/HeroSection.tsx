@@ -4,11 +4,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { FaArrowRight } from "react-icons/fa";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export function HeroSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const [hasMounted, setHasMounted] = useState(false);
+
+  // Delay animation until hydration completes (prevents flicker)
+  useEffect(() => {
+    const timeout = setTimeout(() => setHasMounted(true), 50);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const animateIfReady = hasMounted && isInView;
 
   return (
     <section
@@ -18,7 +27,7 @@ export function HeroSection() {
       <div className="absolute inset-0 overflow-hidden">
         <motion.svg
           initial={{ y: 50, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
+          animate={animateIfReady ? { y: 0, opacity: 1 } : {}}
           transition={{ duration: 1, delay: 0.5 }}
           className="absolute bottom-0 fill-white"
           xmlns="http://www.w3.org/2000/svg"
@@ -34,12 +43,12 @@ export function HeroSection() {
         <motion.div
           className="md:w-1/2 mb-10 md:mb-0 text-center md:text-left"
           initial={{ opacity: 0, x: -50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+          animate={animateIfReady ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.3 }}
             className="text-3xl sm:text-4xl md:text-6xl font-pacifico text-white mb-6"
           >
@@ -47,7 +56,7 @@ export function HeroSection() {
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.4 }}
             className="text-base sm:text-lg md:text-2xl text-white mb-8"
           >
@@ -55,7 +64,7 @@ export function HeroSection() {
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.5 }}
             className="flex flex-wrap justify-center md:justify-start gap-4"
           >
@@ -96,12 +105,12 @@ export function HeroSection() {
         <motion.div
           className="md:w-1/2 w-full relative"
           initial={{ opacity: 0, x: 50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+          animate={animateIfReady ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
-            animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+            animate={animateIfReady ? { scale: 1, opacity: 1 } : {}}
             transition={{ duration: 0.7, delay: 0.5 }}
             className="w-full h-[260px] sm:h-[300px] md:h-[400px] relative rounded-full overflow-hidden"
           >
@@ -111,12 +120,14 @@ export function HeroSection() {
               fill
               className="object-cover"
               priority
+              placeholder="blur"
+              blurDataURL="/images/home-pic.jpg"
             />
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: -50, rotate: 0 }}
-            animate={isInView ? { opacity: 1, x: 0, rotate: 12 } : { opacity: 0, x: -50, rotate: 0 }}
+            animate={animateIfReady ? { opacity: 1, x: 0, rotate: 12 } : {}}
             transition={{ duration: 0.7, delay: 0.8, type: "spring" }}
             className="absolute -bottom-10 -left-6 sm:-left-10 w-28 h-28 sm:w-32 sm:h-32 bg-coral rounded-full flex items-center justify-center transform"
           >
@@ -127,7 +138,7 @@ export function HeroSection() {
 
           <motion.div
             initial={{ opacity: 0, x: 50, rotate: 0 }}
-            animate={isInView ? { opacity: 1, x: 0, rotate: -12 } : { opacity: 0, x: 50, rotate: 0 }}
+            animate={animateIfReady ? { opacity: 1, x: 0, rotate: -12 } : {}}
             transition={{ duration: 0.7, delay: 1, type: "spring" }}
             className="absolute -top-5 -right-4 sm:-right-5 w-24 h-24 sm:w-28 sm:h-28 bg-pale-green rounded-full flex items-center justify-center transform"
           >

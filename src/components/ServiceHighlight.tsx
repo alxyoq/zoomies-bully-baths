@@ -19,41 +19,30 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
   return (
     <motion.div
       ref={cardRef}
-      initial={{ opacity: 0, y: 50 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+      initial={false}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.2 * index, type: "spring" }}
       whileHover={{ y: -10, transition: { duration: 0.2 } }}
-      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all"
+      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all opacity-0"
     >
       <div className="relative w-full h-72 sm:h-56 md:h-64 overflow-hidden">
-        <motion.div
-          whileHover={{
-            scale: 1.05,
-            transition: { duration: 0.5 }
-          }}
-          className="w-full h-full"
-        >
-          <Image
-            src={imageSrc}
-            alt={title}
-            fill
-            className={`object-cover rounded-t-lg ${
-              imageSrc === "images/happy-client1.jpg"
-                ? "object-top sm:object-[center_30%]"
-                : "object-center"
-            }`}
-            priority
-          />
-        </motion.div>
+        <Image
+          src={imageSrc}
+          alt={title}
+          fill
+          className={`object-cover rounded-t-lg ${
+            imageSrc === "images/happy-client1.jpg"
+              ? "object-top sm:object-[center_30%]"
+              : "object-center"
+          }`}
+          placeholder="blur"
+          blurDataURL={imageSrc}
+          priority
+        />
       </div>
-      <motion.div
-        className="p-4"
-        initial={{ opacity: 0 }}
-        animate={isInView ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ delay: 0.3 * index, duration: 0.5 }}
-      >
+      <div className="p-4">
         <p className="text-gray-700 text-center text-sm sm:text-base">{title}</p>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
@@ -65,7 +54,7 @@ export function ServiceHighlight() {
   return (
     <motion.div
       ref={sectionRef}
-      className="container mx-auto px-4 py-16"
+      className="container mx-auto px-4 py-16 min-h-[600px]"
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
