@@ -27,16 +27,24 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
   return (
     <motion.div
       ref={cardRef}
-      style={{ willChange: "transform, opacity" }}
+      style={{
+        willChange: "transform, opacity",
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+      }}
       initial={{ opacity: 0, y: 50 }}
       animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.2 * index, type: "spring" }}
       whileHover={{ y: -10, transition: { duration: 0.2 } }}
-      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all"
+      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
     >
       <div className="relative w-full h-72 sm:h-56 md:h-64 overflow-hidden">
         <motion.div
-          style={{ willChange: "transform" }}
+          style={{
+            willChange: "transform",
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
+          }}
           whileHover={{
             scale: 1.05,
             transition: { duration: 0.5 },
@@ -86,6 +94,10 @@ export function ServiceHighlight() {
     <motion.div
       ref={sectionRef}
       className="container mx-auto px-4 py-16 min-h-[600px]"
+      style={{
+        transform: "translateZ(0)",
+        backfaceVisibility: "hidden",
+      }}
     >
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -111,6 +123,10 @@ export function ServiceHighlight() {
           initial={{ opacity: 0, y: 30 }}
           animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
+          style={{
+            transform: "translateZ(0)",
+            backfaceVisibility: "hidden",
+          }}
         >
           <motion.p
             className="text-lg sm:text-xl text-gray-700 mb-6"
