@@ -1,3 +1,4 @@
+/* globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -76,11 +77,20 @@
     @apply bg-background text-foreground;
   }
 
-  h1, h2, h3, h4 {
+  h1,
+  h2,
+  h3,
+  h4 {
     font-family: var(--font-pacifico);
   }
 
   body {
     font-family: var(--font-nunito-sans);
+  }
+
+  /* Ensure all media scales down on small screens */
+  img,
+  video {
+    @apply max-w-full h-auto;
   }
 }

@@ -2,8 +2,8 @@ import { Layout } from "@/components/Layout";
 import { HeroSection } from "@/components/HeroSection";
 import { WhyChooseMobile } from "@/components/WhyChooseMobile";
 import { ServicesSection } from "@/components/ServicesSection";
-import { ServiceHighlight } from "@/components/ServiceHighlight";
 import { TransformationSection } from "@/components/TransformationSection";
+import { ServiceHighlight } from "@/components/ServiceHighlight";
 import { CTASection } from "@/components/CTASection";
 
 export default function Home() {
@@ -12,8 +12,8 @@ export default function Home() {
       <HeroSection />
       <WhyChooseMobile />
       <ServicesSection />
-      <ServiceHighlight />
       <TransformationSection />
+	  <ServiceHighlight />
       <CTASection />
     </Layout>
   );

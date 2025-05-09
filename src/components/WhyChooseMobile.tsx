@@ -1,8 +1,7 @@
 "use client";
 
 import { FaClock, FaHome, FaSmile } from "react-icons/fa";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 
 interface FeatureCardProps {
@@ -24,23 +23,17 @@ function FeatureCard({ icon, title, description, bgColor, delay }: FeatureCardPr
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
       transition={{ duration: 0.5, delay, type: "spring", stiffness: 100 }}
       whileHover={{ scale: 1.05 }}
-      className={`${bgColor} p-6 rounded-[50%] shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center aspect-square`}
+      className={`${bgColor} p-6 rounded-[50%] shadow-sm hover:shadow-md transition-all flex flex-col items-center justify-center aspect-square max-w-xs mx-auto`}
     >
       <motion.div
-        className="mb-3 text-white text-3xl"
-        animate={{
-          scale: [1, 1.2, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Number.POSITIVE_INFINITY,
-          repeatDelay: 2,
-        }}
+        className="mb-3 text-white text-2xl sm:text-3xl"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
       >
         {icon}
       </motion.div>
-      <h3 className="text-xl font-pacifico text-center text-white mb-2">{title}</h3>
-      <p className="text-white text-center text-sm">{description}</p>
+      <h3 className="text-lg sm:text-xl font-pacifico text-center text-white mb-2">{title}</h3>
+      <p className="text-white text-center text-xs sm:text-sm">{description}</p>
     </motion.div>
   );
 }
@@ -59,7 +52,7 @@ export function WhyChooseMobile() {
           transition={{ duration: 0.6 }}
         >
           <motion.h2
-            className="text-3xl font-pacifico text-[#46aebe] mb-4"
+            className="text-2xl sm:text-3xl font-pacifico text-[#46aebe] mb-4"
             initial={{ opacity: 0 }}
             animate={sectionInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -67,7 +60,7 @@ export function WhyChooseMobile() {
             Why Choose Mobile Grooming?
           </motion.h2>
           <motion.p
-            className="text-lg text-gray-600 max-w-3xl mx-auto"
+            className="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto"
             initial={{ opacity: 0 }}
             animate={sectionInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -82,25 +75,23 @@ export function WhyChooseMobile() {
             key="stress-free"
             icon={<FaSmile />}
             title="Stress-Free Experience"
-            description="No more stressful car rides or waiting in cages. Your pet is groomed in a familiar environment."
+            description="No more stressful car rides or waiting in cages."
             bgColor="bg-coral"
             delay={0.2}
           />
-
           <FeatureCard
             key="one-on-one"
             icon={<FaHome />}
             title="One-on-One Attention"
-            description="Each pet receives dedicated, personalized care throughout their grooming session."
+            description="Each pet receives dedicated care throughout their session."
             bgColor="bg-light-blue"
             delay={0.4}
           />
-
           <FeatureCard
             key="convenient"
             icon={<FaClock />}
             title="Convenient Scheduling"
-            description="We work around your schedule, making pet grooming fit seamlessly into your busy life."
+            description="We work around your schedule to fit grooming into your life."
             bgColor="bg-pale-green"
             delay={0.6}
           />

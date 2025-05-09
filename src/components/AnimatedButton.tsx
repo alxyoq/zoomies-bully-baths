@@ -1,85 +1,114 @@
 "use client";
 
-import React, { type ReactNode } from "react";
-import { motion } from "framer-motion";
-import { cn } from "@/lib/utils";
+import React, {
+  forwardRef,
+  type ButtonHTMLAttributes,
+  type AnchorHTMLAttributes,
+} from "react";
+import { motion, type MotionProps } from "framer-motion";
+import Link from "next/link";
 
-interface AnimatedButtonProps {
-  children: ReactNode;
-  className?: string;
-  variant?: "primary" | "secondary" | "outline" | "text";
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: "button" | "submit" | "reset";
-  href?: string;
+/** Tailwind-merge‐like helper (tiny): keeps last duplicate class */
+function cn(...classes: (string | undefined | false)[]) {
+  return classes.filter(Boolean).join(" ");
 }
 
-export function AnimatedButton({
-  children,
-  className,
-  variant = "primary",
-  onClick,
-  disabled = false,
-  type = "button",
-  href,
-}: AnimatedButtonProps) {
-  const baseStyles = "rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
+const spring = { type: "spring", stiffness: 400, damping: 12 } as const;
+const buttonVariants = {
+  rest: { scale: 1 },
+  hover: { scale: 1.05 },
+  tap: { scale: 0.95 },
+} satisfies MotionProps["variants"];
 
-  const variantStyles = {
-    primary: "bg-pink-600 text-white hover:bg-pink-700 focus:ring-pink-500",
-    secondary: "bg-teal-600 text-white hover:bg-teal-700 focus:ring-teal-500",
-    outline: "bg-transparent border-2 border-current text-pink-600 hover:bg-pink-50 focus:ring-pink-500",
-    text: "bg-transparent text-pink-600 hover:text-pink-800 focus:ring-pink-500 hover:underline",
+type Intent = "primary" | "secondary" | "outline" | "text";
+
+const intentClasses: Record<Intent, string> = {
+  primary:
+    "bg-coral text-white hover:bg-opacity-90 focus:ring-coral focus:ring-2 focus:ring-offset-2",
+  secondary:
+    "bg-light-blue text-white hover:bg-opacity-90 focus:ring-light-blue focus:ring-2 focus:ring-offset-2",
+  outline:
+    "border-2 border-current text-coral hover:bg-coral/10 focus:ring-coral focus:ring-2 focus:ring-offset-2",
+  text: "text-coral hover:underline focus:outline-none",
+};
+
+/* ——————————————————————————————————————————————————————————————————— */
+
+interface SharedProps {
+  intent?: Intent;
+  className?: string;
+  disabled?: boolean;
+  children: React.ReactNode;
+}
+
+type ButtonProps = SharedProps &
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: never;
   };
 
-  const buttonVariants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.05 },
-    tap: { scale: 0.95 },
+type AnchorProps = SharedProps &
+  AnchorHTMLAttributes<HTMLAnchorElement> & {
+    href: string;
   };
 
+type Props = ButtonProps | AnchorProps;
+
+/* ——————————————————————————————————————————————————————————————————— */
+
+export const AnimatedButton = forwardRef<
+  HTMLButtonElement | HTMLAnchorElement,
+  Props
+>(function AnimatedButton(
+  { intent = "primary", className, disabled, href, children, ...rest },
+  ref,
+) {
   const classes = cn(
-    baseStyles,
-    variantStyles[variant],
-    disabled && "opacity-50 cursor-not-allowed",
-    className
+    "inline-flex items-center justify-center rounded-full font-medium transition-colors px-6 py-3",
+    intentClasses[intent],
+    disabled && "opacity-50 cursor-not-allowed pointer-events-none",
+    className,
   );
 
+  const motionProps: MotionProps = {
+    variants: buttonVariants,
+    initial: "rest",
+    whileHover: disabled ? undefined : "hover",
+    whileTap: disabled ? undefined : "tap",
+    transition: spring,
+  };
+
+  // ————————————————————————————  anchor  ————————————————————————————
   if (href) {
-    return (
+    const isInternal = href.startsWith("/");
+    const anchor = (
       <motion.a
+        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
+        {...motionProps}
+        ref={ref as React.Ref<HTMLAnchorElement>}
         href={href}
+        aria-disabled={disabled}
         className={classes}
-        whileHover="hover"
-        whileTap="tap"
-        variants={buttonVariants}
-        transition={{
-          type: "spring",
-          stiffness: 400,
-          damping: 10
-        }}
+        {...(!isInternal && {
+          target: "_blank",
+          rel: "noopener noreferrer",
+        })}
       >
         {children}
       </motion.a>
     );
+    return isInternal ? <Link href={href}>{anchor}</Link> : anchor;
   }
 
+  // ————————————————————————————  button  ————————————————————————————
   return (
     <motion.button
-      type={type}
-      className={classes}
-      onClick={onClick}
+      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
+      {...motionProps}
+      ref={ref as React.Ref<HTMLButtonElement>}
       disabled={disabled}
-      whileHover="hover"
-      whileTap="tap"
-      variants={buttonVariants}
-      transition={{
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }}
+      className={classes}
     >
       {children}
     </motion.button>
   );
-}
+});

@@ -25,7 +25,7 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
       whileHover={{ y: -10, transition: { duration: 0.2 } }}
       className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all"
     >
-      <div className="relative w-full h-64 overflow-hidden">
+      <div className="relative w-full h-72 sm:h-56 md:h-64 overflow-hidden">
         <motion.div
           whileHover={{
             scale: 1.05,
@@ -36,10 +36,12 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
           <Image
             src={imageSrc}
             alt={title}
-            layout="fill"
-            objectFit="cover"
-            objectPosition={imageSrc === "images/happy-client.jpg" ? "center 30%" : "center"}
-            className="rounded-t-lg"
+            fill
+            className={`object-cover rounded-t-lg ${
+              imageSrc === "images/happy-client1.jpg"
+                ? "object-top sm:object-[center_30%]"
+                : "object-center"
+            }`}
             priority
           />
         </motion.div>
@@ -50,7 +52,7 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
         animate={isInView ? { opacity: 1 } : { opacity: 0 }}
         transition={{ delay: 0.3 * index, duration: 0.5 }}
       >
-        <p className="text-gray-700 text-center">{title}</p>
+        <p className="text-gray-700 text-center text-sm sm:text-base">{title}</p>
       </motion.div>
     </motion.div>
   );
@@ -91,7 +93,7 @@ export function ServiceHighlight() {
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <motion.p
-            className="text-xl text-gray-700 mb-6"
+            className="text-lg sm:text-xl text-gray-700 mb-6"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.7 }}
@@ -109,14 +111,8 @@ export function ServiceHighlight() {
             >
               <span className="relative z-10">Book Your Appointment Today</span>
               <motion.span
-                animate={{
-                  rotate: [0, 15, 0, -15, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Number.POSITIVE_INFINITY,
-                  repeatDelay: 2,
-                }}
+                animate={{ rotate: [0, 15, 0, -15, 0] }}
+                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
               >
                 <FaBone className="text-white ml-2" />
               </motion.span>

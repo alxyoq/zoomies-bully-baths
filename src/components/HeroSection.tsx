@@ -13,7 +13,7 @@ export function HeroSection() {
   return (
     <section
       ref={ref}
-      className="relative min-h-[80vh] overflow-hidden bg-light-blue"
+      className="relative min-h-[80vh] overflow-visible md:overflow-hidden bg-light-blue"
     >
       <div className="absolute inset-0 overflow-hidden">
         <motion.svg
@@ -30,7 +30,7 @@ export function HeroSection() {
         </motion.svg>
       </div>
 
-      <div className="container mx-auto px-4 py-16 relative z-10 flex flex-col md:flex-row items-center">
+      <div className="container mx-auto px-4 py-12 md:py-16 relative z-10 flex flex-col md:flex-row items-center">
         <motion.div
           className="md:w-1/2 mb-10 md:mb-0 text-center md:text-left"
           initial={{ opacity: 0, x: -50 }}
@@ -41,7 +41,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-4xl md:text-6xl font-pacifico text-white mb-6"
+            className="text-3xl sm:text-4xl md:text-6xl font-pacifico text-white mb-6"
           >
             Premium Mobile Pet Grooming
           </motion.h1>
@@ -49,7 +49,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.4 }}
-            className="text-xl md:text-2xl text-white mb-8"
+            className="text-base sm:text-lg md:text-2xl text-white mb-8"
           >
             We bring professional grooming services directly to your doorstep
           </motion.p>
@@ -94,7 +94,7 @@ export function HeroSection() {
         </motion.div>
 
         <motion.div
-          className="md:w-1/2 relative"
+          className="md:w-1/2 w-full relative"
           initial={{ opacity: 0, x: 50 }}
           animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -103,12 +103,12 @@ export function HeroSection() {
             initial={{ scale: 0.8, opacity: 0 }}
             animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.7, delay: 0.5 }}
-            className="w-full h-[400px] relative rounded-full overflow-hidden"
+            className="w-full h-[260px] sm:h-[300px] md:h-[400px] relative rounded-full overflow-hidden"
           >
             <Image
               src="images/home-pic.jpg"
               alt="Happy dog after grooming"
-			  fill
+              fill
               className="object-cover"
               priority
             />
@@ -118,9 +118,9 @@ export function HeroSection() {
             initial={{ opacity: 0, x: -50, rotate: 0 }}
             animate={isInView ? { opacity: 1, x: 0, rotate: 12 } : { opacity: 0, x: -50, rotate: 0 }}
             transition={{ duration: 0.7, delay: 0.8, type: "spring" }}
-            className="absolute -bottom-10 -left-10 w-40 h-40 bg-coral rounded-full flex items-center justify-center transform"
+            className="absolute -bottom-10 -left-6 sm:-left-10 w-28 h-28 sm:w-32 sm:h-32 bg-coral rounded-full flex items-center justify-center transform"
           >
-            <p className="text-white font-pacifico text-lg text-center">
+            <p className="text-white font-pacifico text-xs sm:text-sm text-center">
               Stress-Free Experience
             </p>
           </motion.div>
@@ -129,10 +129,10 @@ export function HeroSection() {
             initial={{ opacity: 0, x: 50, rotate: 0 }}
             animate={isInView ? { opacity: 1, x: 0, rotate: -12 } : { opacity: 0, x: 50, rotate: 0 }}
             transition={{ duration: 0.7, delay: 1, type: "spring" }}
-            className="absolute -top-5 -right-5 w-32 h-32 bg-pale-green rounded-full flex items-center justify-center transform"
+            className="absolute -top-5 -right-4 sm:-right-5 w-24 h-24 sm:w-28 sm:h-28 bg-pale-green rounded-full flex items-center justify-center transform"
           >
-            <p className="text-white font-pacifico text-lg text-center">
-              We Come to You!
+            <p className="text-white font-pacifico text-xs sm:text-sm text-center">
+              We Come&nbsp;to&nbsp;You!
             </p>
           </motion.div>
         </motion.div>

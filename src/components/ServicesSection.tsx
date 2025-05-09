@@ -11,11 +11,11 @@ interface ServiceItemProps {
 function ServiceItem({ icon, title, description, bgColor }: ServiceItemProps) {
   return (
     <div className="relative flex flex-col items-center text-center">
-      <div className={`${bgColor} w-28 h-28 rounded-full flex items-center justify-center mb-4`}>
-        <div className="text-3xl text-white">{icon}</div>
+      <div className={`${bgColor} w-24 h-24 sm:w-28 sm:h-28 rounded-full flex items-center justify-center mb-4`}>
+        <div className="text-2xl sm:text-3xl text-white">{icon}</div>
       </div>
-      <h3 className="text-xl font-pacifico text-gray-800 mb-1">{title}</h3>
-      <p className="text-gray-600 text-sm">{description}</p>
+      <h3 className="text-lg sm:text-xl font-pacifico text-gray-800 mb-1">{title}</h3>
+      <p className="text-gray-600 text-xs sm:text-sm">{description}</p>
     </div>
   );
 }
@@ -25,8 +25,8 @@ export function ServicesSection() {
     <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-pacifico text-[#46aebe] mb-4">Our Grooming Services</h2>
-          <p className="text-lg text-gray-600 max-w-xl mx-auto">
+          <h2 className="text-2xl sm:text-3xl font-pacifico text-[#46aebe] mb-4">Our Grooming Services</h2>
+          <p className="text-base sm:text-lg text-gray-600 max-w-xl mx-auto">
             Each pet receives dedicated, professional care tailored to their needs
           </p>
         </div>

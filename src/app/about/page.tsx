@@ -28,13 +28,15 @@ export default function AboutPage() {
             <h2 className="text-3xl font-pacifico text-[#46aebe] mb-6 text-center">Our Story</h2>
             <div className="bg-white p-8 rounded-lg shadow-md">
               <div className="flex flex-col md:flex-row gap-8 items-center mb-8">
-                <div className="md:w-1/3">
-                  <div className="relative h-48 md:h-64 w-full rounded-lg overflow-hidden">
+                <div className="md:w-1/3 w-full flex justify-center">
+                  <div className="w-full rounded-lg overflow-hidden">
                     <Image
                       alt="Zoomies Bully Baths van"
-                      src="images/about-me-pic.jpg"
-                      fill
-                      className="object-cover"
+                      src="/images/about-me-pic.jpg"
+                      width={400}
+                      height={400}
+                      className="object-contain w-full h-auto"
+                      priority
                     />
                   </div>
                 </div>
