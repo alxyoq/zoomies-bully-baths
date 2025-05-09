@@ -29,11 +29,17 @@ export const metadata: Metadata = {
     "dog grooming",
     "mobile grooming",
     "pet grooming",
-    "Westville NJ",
+    "camden county",
+	"gloucester county",
     "pet salon",
   ],
   authors: [{ name: "Zoomies Bully Baths" }],
   creator: "Zoomies Bully Baths",
+  icons: {
+    icon: "/favicon.png", // <-- Added favicon here
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -42,10 +48,17 @@ export const metadata: Metadata = {
     description:
       "Professional mobile pet grooming service that comes to your doorstep",
     siteName: "Zoomies Bully Baths",
+    images: [
+      {
+        url: "https://zoomiesbullybaths.com/images/logo-text.png",
+        width: 1200,
+        height: 630,
+        alt: "Zoomies Bully Baths Logo",
+      },
+    ],
   },
 };
 
-// This separate export is where Next.js will pull your viewport meta from:
 export function generateViewport() {
   return "width=device-width, initial-scale=1";
 }
