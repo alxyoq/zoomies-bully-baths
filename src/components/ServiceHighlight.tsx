@@ -27,6 +27,7 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
   return (
     <motion.div
       ref={cardRef}
+      style={{ willChange: "transform, opacity" }}
       initial={{ opacity: 0, y: 50 }}
       animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.2 * index, type: "spring" }}
@@ -35,9 +36,10 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
     >
       <div className="relative w-full h-72 sm:h-56 md:h-64 overflow-hidden">
         <motion.div
+          style={{ willChange: "transform" }}
           whileHover={{
             scale: 1.05,
-            transition: { duration: 0.5 }
+            transition: { duration: 0.5 },
           }}
           className="w-full h-full"
         >
@@ -130,7 +132,11 @@ export function ServiceHighlight() {
               <span className="relative z-10">Book Your Appointment Today</span>
               <motion.span
                 animate={{ rotate: [0, 15, 0, -15, 0] }}
-                transition={{ duration: 1.5, repeat: Number.POSITIVE_INFINITY, repeatDelay: 2 }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Number.POSITIVE_INFINITY,
+                  repeatDelay: 2,
+                }}
               >
                 <FaBone className="text-white ml-2" />
               </motion.span>
