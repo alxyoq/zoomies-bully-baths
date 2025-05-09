@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FaBone } from "react-icons/fa";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface ServiceCardProps {
   imageSrc: string;
@@ -15,34 +15,55 @@ interface ServiceCardProps {
 function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
   const cardRef = useRef(null);
   const isInView = useInView(cardRef, { once: true });
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHasMounted(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const animateIfReady = hasMounted && isInView;
 
   return (
     <motion.div
       ref={cardRef}
-      initial={false}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      initial={{ opacity: 0, y: 50 }}
+      animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.5, delay: 0.2 * index, type: "spring" }}
       whileHover={{ y: -10, transition: { duration: 0.2 } }}
-      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all opacity-0"
+      className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all"
     >
       <div className="relative w-full h-72 sm:h-56 md:h-64 overflow-hidden">
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          className={`object-cover rounded-t-lg ${
-            imageSrc === "images/happy-client1.jpg"
-              ? "object-top sm:object-[center_30%]"
-              : "object-center"
-          }`}
-          placeholder="blur"
-          blurDataURL={imageSrc}
-          priority
-        />
+        <motion.div
+          whileHover={{
+            scale: 1.05,
+            transition: { duration: 0.5 }
+          }}
+          className="w-full h-full"
+        >
+          <Image
+            src={imageSrc}
+            alt={title}
+            fill
+            className={`object-cover rounded-t-lg ${
+              imageSrc === "images/happy-client1.jpg"
+                ? "object-top sm:object-[center_30%]"
+                : "object-center"
+            }`}
+            placeholder="blur"
+            blurDataURL={imageSrc}
+            priority
+          />
+        </motion.div>
       </div>
-      <div className="p-4">
+      <motion.div
+        className="p-4"
+        initial={{ opacity: 0 }}
+        animate={animateIfReady ? { opacity: 1 } : {}}
+        transition={{ delay: 0.3 * index, duration: 0.5 }}
+      >
         <p className="text-gray-700 text-center text-sm sm:text-base">{title}</p>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -50,6 +71,14 @@ function ServiceCard({ imageSrc, title, index }: ServiceCardProps) {
 export function ServiceHighlight() {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true });
+  const [hasMounted, setHasMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHasMounted(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const animateIfReady = hasMounted && isInView;
 
   return (
     <motion.div
@@ -78,13 +107,13 @@ export function ServiceHighlight() {
         <motion.div
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          animate={animateIfReady ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <motion.p
             className="text-lg sm:text-xl text-gray-700 mb-6"
             initial={{ opacity: 0 }}
-            animate={isInView ? { opacity: 1 } : { opacity: 0 }}
+            animate={animateIfReady ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.7 }}
           >
             Want to see your pet looking their best after a mobile grooming session?
